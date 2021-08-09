@@ -49,6 +49,8 @@ private:
   float c_d;
   float p_error;
 
+  float travel;
+
   float measure_memory[MEM_SIZE];
   int   id_memory;
   
@@ -63,9 +65,14 @@ public:
                   float _ratio, float _controller_freq);
   void setReference(float _val){reference=_val;}
   void setRadAtS(float _vel);
+  float getRadAtS(){return measure;}
   void update();
   void clearMemory();
   float meanMemory();
+  void init();
+
+  float getTravel(){return travel;}
+  void resetTravel(){travel=0.0;}
 
 };
 

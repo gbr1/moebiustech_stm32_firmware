@@ -21,6 +21,9 @@ MotorController::MotorController(uint8 _pwm, uint8 _in1, uint8 _in2,
   p_error=0;
   c_i=0;
 
+  measure=0.0;
+  travel=0.0;
+
 }
 
 void MotorController::addMemory(float _val){
@@ -72,6 +75,7 @@ void MotorController::update(){
   
   //get the moving average
   measure=meanMemory();
+  travel+=measure;
     
   //error
   error=reference-measure;
@@ -88,4 +92,12 @@ void MotorController::update(){
   setRadAtS(actuation);
 
   p_error=error;
+}
+
+void MotorController::init(){
+  setReference(0.0);
+  force_stop();
+  clearMemory();
+  reset();
+  resetTravel();
 }
