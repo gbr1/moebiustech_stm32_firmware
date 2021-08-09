@@ -27,6 +27,7 @@
 #include "dcmotor.h"
 #include "encoder.h"
 #include "board_pins.h"
+#include "motor_specs.h"
 
 #define MEM_SIZE 5
 

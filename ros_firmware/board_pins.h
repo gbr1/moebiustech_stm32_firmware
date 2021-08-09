@@ -3,11 +3,7 @@
 
 
 #define LED_BUILTIN PC13
-
-const float MOTOR_CPR = 44.0;  // probably 11ppr so 44cpr
-const float MOTOR_GR = 30.0;   // from a datasheet 333rpm -> 30:1
-const float MOTOR_RATIO = MOTOR_CPR * MOTOR_GR; //from motor encoder shaft to wheel shaft
-const float MOTOR_LIMIT = 34.5; // maximum rad/s, 333rpm -> 34.871678415 rad/s
+#define serial_port Serial1
 
 //motor A encoder is associated to TIM5, must be added afio to switch the mode (conflict with motorD TIM2)
 #define MOTOR_A_PWM PC9

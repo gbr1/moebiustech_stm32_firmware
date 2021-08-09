@@ -22,7 +22,7 @@ int ctrl = 1;
 int kk=0;
 void setup() {
   pinMode(LED_BUILTIN,OUTPUT);
-  Serial1.begin(115200);
+  serial_port.begin(115200);
   systick_attach_callback(tick);
   t=millis();
   motorC.clearMemory();
@@ -54,9 +54,9 @@ void loop() {
   /*
 
   if (timer_joint>=10){
-    Serial1.print(encoder_motor_D.getCount());
-    Serial1.print("   ");
-    Serial1.println(encoder_motor_C.getCount());
+    serial_port.print(encoder_motor_D.getCount());
+    serial_port.print("   ");
+    serial_port.println(encoder_motor_C.getCount());
     encoder_motor_C.reset();
     encoder_motor_D.reset();
     timer_joint=0;
