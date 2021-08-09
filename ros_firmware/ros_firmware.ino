@@ -17,7 +17,7 @@ bool led_status = false;
 uint16 led_period = 1000;
 
 // joints
-MotorController motorD(MOTOR_D_PWM,MOTOR_D_IN1,MOTOR_D_IN2,MOTOR_D_TIM, COUNT_BOTH_CHANNELS,MOTOR_D_CH1,MOTOR_D_CH2,true,MOTOR_RATIO,10.0); //left
+MotorController motorD(MOTOR_D_PWM,MOTOR_D_IN2,MOTOR_D_IN1,MOTOR_D_TIM, COUNT_BOTH_CHANNELS,MOTOR_D_CH1,MOTOR_D_CH2,false,MOTOR_RATIO,10.0); //left
 MotorController motorC(MOTOR_C_PWM,MOTOR_C_IN1,MOTOR_C_IN2,MOTOR_C_TIM, COUNT_BOTH_CHANNELS,MOTOR_C_CH1,MOTOR_C_CH2,true,MOTOR_RATIO,10.0); //right
 
 //subscriber for controlling joints
@@ -36,8 +36,6 @@ void setup() {
   nh.initNode();
   nh.subscribe(jointdrive);
   nh.advertise(jointstate);
-  
-
 
   systick_attach_callback(tick);
 }
