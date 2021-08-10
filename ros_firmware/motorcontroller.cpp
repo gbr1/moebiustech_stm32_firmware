@@ -13,7 +13,7 @@ MotorController::MotorController(uint8 _pwm, uint8 _in1, uint8 _in2,
   reference=0.0;
   error=0.0;
   controller_freq=_controller_freq;
-  rad_factor=1000.0*(6.28/ratio)/controller_freq;
+  rad_factor=1000.0*(2*PI/ratio)/controller_freq;
 
   clearMemory();
   id_memory=0;

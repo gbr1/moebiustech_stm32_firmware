@@ -3,6 +3,7 @@
 #include <ros.h>
 #include <moebiustech_stm32_ros/Drive.h>
 #include <moebiustech_stm32_ros/Feedback.h>
+#include <moebiustech_stm32_ros/Status.h>
 
 // ROS
 ros::NodeHandle  nh;
@@ -11,10 +12,14 @@ ros::NodeHandle  nh;
 uint16 timer_joint=0;
 uint16 timer_led=0;
 uint16 timer_motors=0;
+uint16 timer_battery=0;
 
 
 bool led_status = false;
 uint16 led_period = 1000;
+
+float battery=0.0;
+uint8 battery_cycle=0;
 
 // joints
 MotorController motorD(MOTOR_D_PWM,MOTOR_D_IN2,MOTOR_D_IN1,MOTOR_D_TIM, COUNT_BOTH_CHANNELS,MOTOR_D_CH1,MOTOR_D_CH2,false,MOTOR_RATIO,10.0); //left
@@ -28,15 +33,26 @@ ros::Subscriber<moebiustech_stm32_ros::Drive> jointdrive("/moebiustech_stm32/cmd
 moebiustech_stm32_ros::Feedback robot_state;
 ros::Publisher jointstate("/moebiustech_stm32/feedback", &robot_state);
 
+//publisher for joints feedback
+moebiustech_stm32_ros::Status battery_state;
+ros::Publisher batterystate("/moebiustech_stm32/status", &battery_state);
+
 void setup() {
   pinMode(LED_BUILTIN,OUTPUT);
   digitalWrite(LED_BUILTIN,LOW);
+
+  pinMode(BATTERY_PIN, INPUT_ANALOG);
+
   serial_port.begin(115200);
 
+
+  //ROS
   nh.initNode();
   nh.subscribe(jointdrive);
   nh.advertise(jointstate);
+  nh.advertise(batterystate);
 
+  //1ms interrupt enabled
   systick_attach_callback(tick);
 }
 
@@ -57,7 +73,8 @@ void loop() {
   while (nh.connected()){
     updateLed();
     updateMotors();
-    publishJoints();    
+    publishJoints();
+    updateBattery();    
     nh.spinOnce();
     //delay(1);
   }
@@ -113,8 +130,27 @@ void publishJoints(){
   }
 }
 
+
+void updateBattery(){
+  if (timer_battery>=100){
+    battery+=analogRead(BATTERY_PIN);
+    battery_cycle++;
+    timer_battery=0;
+  }
+  if (battery_cycle>=10){
+    battery=battery*0.008832117/10.0;
+    battery_state.header.frame_id="base_link";
+    battery_state.header.stamp=nh.now();
+    battery_state.battery_voltage=battery;
+    batterystate.publish(&battery_state);
+    battery=0.0;
+    battery_cycle=0;
+  }
+}
+
 void tick(void){
   timer_led++;
   timer_joint++;
   timer_motors++;
+  timer_battery++;
 }

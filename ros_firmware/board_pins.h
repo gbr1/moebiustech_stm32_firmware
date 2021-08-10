@@ -6,6 +6,8 @@
 #define serial_port Serial1
 #define USE_STM32_HW_SERIAL //is Serial1
 
+#define BATTERY_PIN PA5
+
 //motor A encoder is associated to TIM5, must be added afio to switch the mode (conflict with motorD TIM2)
 #define MOTOR_A_PWM PC9
 #define MOTOR_A_IN1 PD2
