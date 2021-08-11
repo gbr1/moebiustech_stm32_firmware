@@ -75,7 +75,7 @@ void MotorController::update(){
   
   //get the moving average
   measure=meanMemory();
-  travel+=measure;
+  travel+=measure*controller_freq/1000.0;
     
   //error
   error=reference-measure;
