@@ -66,7 +66,7 @@ ros::Publisher batterystate("/moebiustech_stm32/status", &battery_state);
 
 //publisher for imu
 sensor_msgs::Imu imu_msg;
-ros::Publisher imu_pub("/moebiustech_stm32/imu", &imu_msg);
+ros::Publisher imu_pub("/moebiustech_stm32/imu_raw", &imu_msg);
 
 void setup() {
   pinMode(LED_BUILTIN,OUTPUT);
