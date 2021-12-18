@@ -25,6 +25,8 @@ If you are on macOS you can also upload just using the serial port.
   1. select `tools -> upload methos -> serial`
   2. press upload
 
+*NOTE: if you encounter some issues on uploading, try to select `tools -> variant -> STM32F103RE`*
+
 ## How to run
 You need to use this [ros package](https://github.com/gbr1/moebiustech_stm32_ros)
 
