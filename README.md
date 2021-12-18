@@ -30,5 +30,7 @@ If you are on macOS you can also upload just using the serial port.
 ## How to run
 You need to use this [ros package](https://github.com/gbr1/moebiustech_stm32_ros)
 
-
+---
+> ***Copyright © 2021 Giovanni di Dio Bruno under MIT license***
+---
 
